@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Babilônia Capital • Riqueza Dinâmica</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --preto-profundo: #030303;
+            --branco-escuro: #d9d0b5;
+            --dourado: #c9a74b;
+            --dourado-escuro: #9e7e34;
+            --cinza-escuro: #1a1a1a;
+            --borda-escura: #2c2c2c;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #e5e3d8;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            scroll-behavior: smooth;
+            opacity: 0;
+            animation: fadeInBody 1s ease forwards;
+        }
+
+        @keyframes fadeInBody {
+            to { opacity: 1; }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        h1, h2, h3, .carteira-titulo, .frase, .logo {
+            font-family: 'Cormorant Garamond', 'Times New Roman', serif;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(180deg, #000000 0%, #0a0a0a 100%);
+            border-bottom: 1px solid #2a2416;
+            padding: 24px 0 16px;
+            text-align: center;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #e0cd8b;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            text-shadow: 0 0 15px rgba(201, 167, 75, 0.5);
+            margin-bottom: 4px;
+            line-height: 1.1;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .logo:hover {
+            text-shadow: 0 0 25px rgba(201, 167, 75, 0.8);
+            transform: scale(1.02);
+        }
+
+        .sub-logo {
+            font-size: 0.9rem;
+            color: #b8a16b;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            font-weight: 300;
+            border-top: 1px dashed #4a3f28;
+            display: inline-block;
+            padding-top: 8px;
+            margin-top: 4px;
+        }
+
+        /* Navegação dinâmica */
+        .nav-dinamica {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-item {
+            color: #b8a16b;
+            text-decoration: none;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            padding: 5px 15px;
+            border: 1px solid transparent;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-item:hover, .nav-item.ativo {
+            color: #e0cd8b;
+            border-bottom: 1px solid #c9a74b;
+        }
+
+        /* Frase dinâmica */
+        .frase-mestra {
+            background: #0d0c08;
+            border-left: 4px solid var(--dourado);
+            border-right: 1px solid #3a351f;
+            padding: 28px 24px;
+            margin: 30px 0 20px;
+            text-align: center;
+            border-radius: 2px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.7);
+            font-style: italic;
+            transition: all 0.5s ease;
+            cursor: pointer;
+        }
+
+        .frase-mestra:hover {
+            box-shadow: 0 15px 35px rgba(201, 167, 75, 0.2);
+        }
+
+        .frase-mestra p {
+            font-size: 1.9rem;
+            font-weight: 600;
+            color: #f3e7c9;
+            line-height: 1.4;
+            margin-bottom: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .frase-mestra span {
+            font-size: 1rem;
+            color: #b49450;
+            display: block;
+            margin-top: 12px;
+            font-style: normal;
+            letter-spacing: 2px;
+            font-weight: 400;
+        }
+
+        /* Toast de notificação */
+        .toast {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #1a1a1a;
+            color: #e0cd8b;
+            padding: 15px 25px;
+            border-left: 4px solid #c9a74b;
+            border-radius: 4px;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: all 0.5s ease;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+        }
+
+        .toast.mostrar {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Seção carteiras */
+        .secao-carteiras {
+            padding: 50px 0 20px;
+            text-align: center;
+        }
+
+        .titulo-secao {
+            font-size: 2.5rem;
+            color: #d4b56c;
+            margin-bottom: 40px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .titulo-secao:after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 2px;
+            background: var(--dourado);
+            margin: 12px auto 0;
+        }
+
+        .grid-carteiras {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 28px;
+            justify-content: center;
+        }
+
+        .carteira-card {
+            background: #0f0f0f;
+            border: 1px solid #2b2b2b;
+            border-top: 3px solid #c9a74b;
+            padding: 32px 20px 28px;
+            flex: 1 1 280px;
+            max-width: 340px;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.8);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .carteira-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(201,167,75,0.05) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .carteira-card:hover::before {
+            opacity: 1;
+        }
+
+        .carteira-card:hover {
+            transform: translateY(-6px);
+            border-color: #b8943c;
+            box-shadow: 0 25px 40px rgba(201, 167, 75, 0.15);
+        }
+
+        .carteira-card.selecionada {
+            border: 2px solid #c9a74b;
+            box-shadow: 0 0 30px rgba(201, 167, 75, 0.3);
+            transform: scale(1.05);
+        }
+
+        .icone-pote {
+            font-size: 2.8rem;
+            color: #e0b354;
+            margin-bottom: 18px;
+            filter: drop-shadow(0 0 6px #5f4a1e);
+            transition: all 0.3s ease;
+        }
+
+        .carteira-card:hover .icone-pote {
+            transform: rotate(5deg) scale(1.1);
+        }
+
+        .carteira-titulo {
+            font-size: 1.9rem;
+            font-weight: 700;
+            color: #e6d7a8;
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+        }
+
+        .descricao {
+            font-size: 0.95rem;
+            color: #b7b09c;
+            margin-bottom: 18px;
+            font-weight: 300;
+            min-height: 60px;
+        }
+
+        .badge-risco {
+            background: #1c1c1c;
+            color: #cdb16b;
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            border: 1px solid #4f431f;
+            margin-top: auto;
+            transition: all 0.3s ease;
+        }
+
+        .carteira-card.selecionada .badge-risco {
+            background: #c9a74b;
+            color: #000;
+        }
+
+        /* Detalhes da carteira */
+        .detalhes-carteira {
+            display: none;
+            background: #0d0c08;
+            border: 1px solid #2a2416;
+            padding: 20px;
+            margin-top: 20px;
+            text-align: left;
+            border-radius: 4px;
+            animation: slideDown 0.4s ease;
+        }
+
+        .detalhes-carteira.visivel {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .detalhes-carteira h4 {
+            color: #d4b56c;
+            margin-bottom: 10px;
+        }
+
+        .detalhes-carteira ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .detalhes-carteira li {
+            padding: 5px 0;
+            border-bottom: 1px solid #2b2b2b;
+            color: #b7b09c;
+        }
+
+        /* Área de conexão */
+        .area-conexao {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 40px;
+            margin: 65px 0 45px;
+            background: #0c0b09;
+            padding: 32px 28px;
+            border-radius: 4px;
+            border: 1px solid #2f2a1c;
+        }
+
+        .link-telegram, .pdf-download {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            color: #dac68c;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: all 0.25s;
+            border-bottom: 1px dotted transparent;
+            padding-bottom: 4px;
+            cursor: pointer;
+        }
+
+        .link-telegram:hover, .pdf-download:hover {
+            color: #f3e3aa;
+            border-bottom: 1px dotted #b49450;
+        }
+
+        .link-telegram i, .pdf-download i {
+            font-size: 2rem;
+            color: #c9a74b;
+        }
+
+        /* Upload de PDF */
+        .upload-area {
+            display: none;
+            margin-top: 10px;
+        }
+
+        .upload-area.visivel {
+            display: block;
+        }
+
+        .upload-btn {
+            background: #1a1a1a;
+            color: #dac68c;
+            border: 1px solid #c9a74b;
+            padding: 8px 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .upload-btn:hover {
+            background: #c9a74b;
+            color: #000;
+        }
+
+        /* Depoimentos dinâmicos */
+        .depoimentos {
+            padding: 40px 0 70px;
+        }
+
+        .depoimentos h2 {
+            text-align: center;
+            font-size: 2.3rem;
+            color: #c9aa55;
+            margin-bottom: 35px;
+        }
+
+        .grade-depoimentos {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 25px;
+            justify-content: center;
+        }
+
+        .depoimento-item {
+            background: #111111;
+            border-left: 4px solid #b49450;
+            padding: 24px;
+            flex: 1 1 260px;
+            max-width: 350px;
+            font-style: italic;
+            color: #cbc3aa;
+            box-shadow: 0 8px 18px black;
+            border-radius: 0 6px 6px 0;
+            transition: all 0.3s ease;
+        }
+
+        .depoimento-item:hover {
+            border-left-color: #e0cd8b;
+            box-shadow: 0 12px 25px rgba(201, 167, 75, 0.2);
+        }
+
+        .depoimento-item p {
+            font-size: 1rem;
+            margin-bottom: 16px;
+            line-height: 1.7;
+        }
+
+        .autor-depoimento {
+            font-weight: 600;
+            color: #d8b45c;
+            font-style: normal;
+            letter-spacing: 1px;
+            font-size: 0.9rem;
+        }
+
+        /* Formulário de novo depoimento */
+        .novo-depoimento {
+            background: #0d0c08;
+            border: 1px solid #2a2416;
+            padding: 20px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .novo-depoimento input, .novo-depoimento textarea {
+            background: #1a1a1a;
+            border: 1px solid #2b2b2b;
+            color: #e5e3d8;
+            padding: 10px;
+            margin: 5px;
+            width: calc(100% - 20px);
+            max-width: 400px;
+        }
+
+        .btn-dourado {
+            background: #1a1a1a;
+            color: #dac68c;
+            border: 1px solid #c9a74b;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-dourado:hover {
+            background: #c9a74b;
+            color: #000;
+        }
+
+        /* Modal de confirmação */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.9);
+            z-index: 999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.visivel {
+            display: flex;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 2px solid #c9a74b;
+            padding: 30px;
+            text-align: center;
+            border-radius: 4px;
+            max-width: 500px;
+        }
+
+        .modal-content h3 {
+            color: #e0cd8b;
+            margin-bottom: 15px;
+        }
+
+        .fechar-modal {
+            background: #c9a74b;
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            margin-top: 15px;
+        }
+
+        footer {
+            text-align: center;
+            color: #5b5542;
+            padding: 28px 0;
+            border-top: 1px solid #1f1c12;
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 680px) {
+            .logo {
+                font-size: 2.6rem;
+                letter-spacing: 3px;
+            }
+            .frase-mestra p {
+                font-size: 1.5rem;
+            }
+            .area-conexao {
+                flex-direction: column;
+                gap: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Toast de notificação -->
+    <div class="toast" id="toast"></div>
+
+    <!-- Modal -->
+    <div class="modal-overlay" id="modal">
+        <div class="modal-content">
+            <h3 id="modal-titulo"></h3>
+            <p id="modal-mensagem"></p>
+            <button class="fechar-modal" onclick="fecharModal()">Fechar</button>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1 class="logo" onclick="atualizarFrase()">Babilônia Capital</h1>
+            <div class="sub-logo">sabedoria ancestral • ativos digitais</div>
+            <nav class="nav-dinamica">
+                <span class="nav-item ativo" onclick="navegar('carteiras')">Carteiras</span>
+                <span class="nav-item" onclick="navegar('conexao')">Conexão</span>
+                <span class="nav-item" onclick="navegar('depoimentos')">Depoimentos</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <!-- Frase dinâmica -->
+        <div class="frase-mestra" id="frase-mestra" onclick="atualizarFrase()">
+            <p id="texto-frase">"O ouro flui para o homem que o poupa, e foge daquele que o desperdiça."</p>
+            <span id="autor-frase">— O Homem Mais Rico da Babilônia</span>
+        </div>
+
+        <!-- Seção das 3 carteiras -->
+        <section class="secao-carteiras" id="secao-carteiras">
+            <h2 class="titulo-secao">Os Três Potes da Prosperidade</h2>
+            <div class="grid-carteiras">
+                <div class="carteira-card" data-pote="1" onclick="selecionarCarteira(this)">
+                    <div class="icone-pote"><i class="fas fa-vault"></i></div>
+                    <h3 class="carteira-titulo">Pote I</h3>
+                    <p class="descricao">Carteira <strong>Conservadora</strong><br>Alocação em ativos sólidos, lastro digital e reserva de valor.</p>
+                    <span class="badge-risco">Baixíssimo Risco</span>
+                </div>
+                <div class="carteira-card" data-pote="2" onclick="selecionarCarteira(this)">
+                    <div class="icone-pote"><i class="fas fa-balance-scale"></i></div>
+                    <h3 class="carteira-titulo">Pote II</h3>
+                    <p class="descricao">Carteira <strong>Assimétrica</strong><br>Risco controlado com potencial de retorno desproporcional.</p>
+                    <span class="badge-risco">Risco Moderado</span>
+                </div>
+                <div class="carteira-card" data-pote="3" onclick="selecionarCarteira(this)">
+                    <div class="icone-pote"><i class="fas fa-gem"></i></div>
+                    <h3 class="carteira-titulo">Pote III</h3>
+                    <p class="descricao">Carteira de <strong>Gemas</strong><br>Oportunidades raras, microcaps e descobertas antes do consenso.</p>
+                    <span class="badge-risco">Alto Risco • Alto Retorno</span>
+                </div>
+            </div>
+            <div class="detalhes-carteira" id="detalhes-carteira"></div>
+        </section>
+
+        <!-- Bloco Telegram + PDF -->
+        <div class="area-conexao" id="secao-conexao">
+            <div>
+                <a class="link-telegram" onclick="abrirTelegram()">
+                    <i class="fab fa-telegram-plane"></i>
+                    <span>Acessar Canal no Telegram<br><small style="font-size:0.75rem; color:#aa9b73;">sinais & discussões</small></span>
+                </a>
+            </div>
+            <div>
+                <a class="pdf-download" onclick="toggleUpload()">
+                    <i class="fas fa-file-pdf"></i>
+                    <span>Gerenciar Aulas PDF<br><small style="font-size:0.75rem; color:#aa9b73;">ambiente cripto • fundamentos</small></span>
+                </a>
+                <div class="upload-area" id="upload-area">
+                    <input type="file" id="pdf-upload" accept=".pdf" onchange="uploadPDF()">
+                    <button class="upload-btn" onclick="verPDFs()">Ver PDFs Disponíveis</button>
+                    <div id="lista-pdfs" style="margin-top:10px; color:#b7b09c;"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Depoimentos -->
+        <section class="depoimentos" id="secao-depoimentos">
+            <h2>O que dizem os iniciados</h2>
+            <div class="grade-depoimentos" id="grade-depoimentos">
+                <!-- Depoimentos serão carregados dinamicamente -->
+            </div>
+            <div class="novo-depoimento">
+                <h3 style="color:#d4b56c;">Deixe seu depoimento</h3>
+                <input type="text" id="nome-depoimento" placeholder="Seu nome">
+                <textarea id="texto-depoimento" placeholder="Sua experiência com a Babilônia Capital..." rows="3"></textarea>
+                <button class="btn-dourado" onclick="adicionarDepoimento()">Enviar Depoimento</button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="container">
+            <span>Babilônia Capital © 2025 • O ouro pertence a quem conhece as regras</span>
+        </div>
+    </footer>
+
+    <script>
+        // Frases do livro "O Homem Mais Rico da Babilônia"
+        const frasesBabilonia = [
+            { texto: "O ouro flui para o homem que o poupa, e foge daquele que o desperdiça.", autor: "O Homem Mais Rico da Babilônia" },
+            { texto: "Uma parte de tudo o que ganhas é tua para guardar.", autor: "O Homem Mais Rico da Babilônia" },
+            { texto: "O dinheiro é abundante para aqueles que compreendem as leis simples que governam a sua aquisição.", autor: "O Homem Mais Rico da Babilônia" },
+            { texto: "A sorte favorece os homens de ação.", autor: "O Homem Mais Rico da Babilônia" },
+            { texto: "Onde a determinação é forte, o fracasso não pode afastar o sucesso.", autor: "O Homem Mais Rico da Babilônia" }
+        ];
+
+        let fraseAtual = 0;
+
+        // Atualizar frase dinamicamente
+        function atualizarFrase() {
+            fraseAtual = (fraseAtual + 1) % frasesBabilonia.length;
+            const frase = frasesBabilonia[fraseAtual];
+            document.getElementById('texto-frase').textContent = `"${frase.texto}"`;
+            document.getElementById('autor-frase').textContent = `— ${frase.autor}`;
+            mostrarToast('Sabedoria ancestral revelada!');
+        }
+
+        // Toast de notificação
+        function mostrarToast(mensagem) {
+            const toast = document.getElementById('toast');
+            toast.textContent = mensagem;
+            toast.classList.add('mostrar');
+            setTimeout(() => {
+                toast.classList.remove('mostrar');
+            }, 3000);
+        }
+
+        // Modal
+        function mostrarModal(titulo, mensagem) {
+            document.getElementById('modal-titulo').textContent = titulo;
+            document.getElementById('modal-mensagem').textContent = mensagem;
+            document.getElementById('modal').classList.add('visivel');
+        }
+
+        function fecharModal() {
+            document.getElementById('modal').classList.remove('visivel');
+        }
+
+        // Navegação suave
+        function navegar(secao) {
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('ativo'));
+            event.target.classList.add('ativo');
+            
+            switch(secao) {
+                case 'carteiras':
+                    document.getElementById('secao-carteiras').scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'conexao':
+                    document.getElementById('secao-conexao').scrollIntoView({ behavior: 'smooth' });
+                    break;
+                case 'depoimentos':
+                    document.getElementById('secao-depoimentos').scrollIntoView({ behavior: 'smooth' });
+                    break;
+            }
+        }
+
+        // Selecionar carteira
+        function selecionarCarteira(card) {
+            // Remove seleção anterior
+            document.querySelectorAll('.carteira-card').forEach(c => c.classList.remove('selecionada'));
+            card.classList.add('selecionada');
+            
+            const pote = card.dataset.pote;
+            const detalhes = document.getElementById('detalhes-carteira');
+            
+            let conteudo = '';
+            switch(pote) {
+                case '1':
+                    conteudo = `
+                        <h4>Pote I - Carteira Conservadora</h4>
+                        <ul>
+                            <li>🛡️ 40% Bitcoin (BTC)</li>
+                            <li>🛡️ 30% Ethereum (ETH)</li>
+                            <li>🛡️ 20% Stablecoins (USDT/USDC)</li>
+                            <li>🛡️ 10% Ouro Digital (PAXG)</li>
+                            <li>📊 Rendimento histórico: 8-15% ao ano</li>
+                            <li>🔒 Foco em preservação de capital</li>
+                        </ul>
+                    `;
+                    break;
+                case '2':
+                    conteudo = `
+                        <h4>Pote II - Carteira Assimétrica</h4>
+                        <ul>
+                            <li>⚖️ 30% Blue Chips (BTC/ETH)</li>
+                            <li>⚖️ 30% Mid Caps (SOL/AVAX/DOT)</li>
+                            <li>⚖️ 25% DeFi Tokens</li>
+                            <li>⚖️ 15% Posições Alavancadas Controladas</li>
+                            <li>📊 Potencial: 50-200% em ciclos</li>
+                            <li>⚡ Risco calculado com stops rigorosos</li>
+                        </ul>
+                    `;
+                    break;
+                case '3':
+                    conteudo = `
+                        <h4>Pote III - Carteira de Gemas</h4>
+                        <ul>
+                            <li>💎 50% Microcaps & Low Caps</li>
+                            <li>💎 25% IDOs & Launchpads</li>
+                            <li>💎 15% NFTs Estratégicos</li>
+                            <li>💎 10% Airdrops & Testnets</li>
+                            <li>🚀 Potencial: 10x-100x</li>
+                            <li>⚠️ Alto risco - Apenas capital especulativo</li>
+                        </ul>
+                    `;
+                    break;
+            }
+            
+            detalhes.innerHTML = conteudo;
+            detalhes.classList.add('visivel');
+            mostrarToast(`Carteira Pote ${pote} selecionada`);
+        }
+
+        // Telegram dinâmico
+        function abrirTelegram() {
+            const linkTelegram = prompt('Digite o link do canal/grupo do Telegram (ou deixe em branco para usar o padrão):', 'https://t.me/babiloniacapital');
+            if (linkTelegram) {
+                window.open(linkTelegram, '_blank');
+                mostrarToast('Acessando canal do Telegram...');
+                localStorage.setItem('telegram_link', linkTelegram);
+            }
+        }
+
+        // Carregar link do Telegram salvo
+        window.addEventListener('load', () => {
+            const linkSalvo = localStorage.getItem('telegram_link');
+            if (linkSalvo) {
+                document.querySelector('.link-telegram').href = linkSalvo;
+            }
+        });
+
+        // Upload de PDF
+        function toggleUpload() {
+            const uploadArea = document.getElementById('upload-area');
+            uploadArea.classList.toggle('visivel');
+        }
+
+        function uploadPDF() {
+            const fileInput = document.getElementById('pdf-upload');
+            const file = fileInput.files[0];
+            
+            if (file && file.type === 'application/pdf') {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const pdfs = JSON.parse(localStorage.getItem('pdfs_aulas') || '[]');
+                    pdfs.push({
+                        nome: file.name,
+                        data: e.target.result,
+                        dataUpload: new Date().toLocaleDateString()
+                    });
+                    localStorage.setItem('pdfs_aulas', JSON.stringify(pdfs));
+                    mostrarToast(`PDF "${file.name}" adicionado com sucesso!`);
+                    verPDFs();
+                };
+                reader.readAsDataURL(file);
+            } else {
+                mostrarModal('Erro', 'Por favor, selecione um arquivo PDF válido.');
+            }
+        }
+
+        function verPDFs() {
+            const pdfs = JSON.parse(localStorage.getItem('pdfs_aulas') || '[]');
+            const listaDiv = document.getElementById('lista-pdfs');
+            
+            if (pdfs.length === 0) {
+                listaDiv.innerHTML = '<p>Nenhum PDF disponível ainda.</p>';
+                return;
+            }
+            
+            let html = '<h4 style="color:#d4b56c;">Aulas Disponíveis:</h4><ul style="list-style:none;padding:0;">';
+            pdfs.forEach((pdf, index) => {
+                html += `
+                    <li style="padding:5px 0; border-bottom:1px solid #2b2b2b;">
+                        <a href="${pdf.data}" download="${pdf.nome}" style="color:#dac68c; text-decoration:none;">
+                            📄 ${pdf.nome} (${pdf.dataUpload})
+                        </a>
+                        <button onclick="removerPDF(${index})" style="background:none;border:none;color:#ff6b6b;cursor:pointer;margin-left:10px;">🗑️</button>
+                    </li>
+                `;
+            });
+            html += '</ul>';
+            listaDiv.innerHTML = html;
+        }
+
+        function removerPDF(index) {
+            const pdfs = JSON.parse(localStorage.getItem('pdfs_aulas') || '[]');
+            pdfs.splice(index, 1);
+            localStorage.setItem('pdfs_aulas', JSON.stringify(pdfs));
+            verPDFs();
+            mostrarToast('PDF removido.');
+        }
+
+        // Depoimentos dinâmicos
+        let depoimentos = JSON.parse(localStorage.getItem('depoimentos') || '[]');
+
+        // Depoimentos padrão se não houver nenhum
+        if (depoimentos.length === 0) {
+            depoimentos = [
+                { nome: 'M. Albuquerque', texto: 'A Babilônia Capital resgatou a filosofia de preservação que eu havia esquecido. O Pote I me trouxe paz.' },
+                { nome: 'Helena R.', texto: 'Com a carteira assimétrica, consegui exposição a projetos que mudaram meu patrimônio sem perder o sono.' },
+                { nome: 'Felipe Castanho', texto: 'As gemas indicadas no pote III são outro nível. Estudo profundo e timing impecável.' }
+            ];
+            localStorage.setItem('depoimentos', JSON.stringify(depoimentos));
+        }
+
+        function carregarDepoimentos() {
+            const grade = document.getElementById('grade-depoimentos');
+            grade.innerHTML = '';
+            
+            depoimentos.forEach(dep => {
+                const div = document.createElement('div');
+                div.className = 'depoimento-item';
+                div.innerHTML = `
+                    <p>"${dep.texto}"</p>
+                    <div class="autor-depoimento">— ${dep.nome}</div>
+                `;
+                grade.appendChild(div);
+            });
+        }
+
+        function adicionarDepoimento() {
+            const nome = document.getElementById('nome-depoimento').value.trim();
+            const texto = document.getElementById('texto-depoimento').value.trim();
+            
+            if (nome && texto) {
+                depoimentos.push({ nome, texto });
+                localStorage.setItem('depoimentos', JSON.stringify(depoimentos));
+                carregarDepoimentos();
+                document.getElementById('nome-depoimento').value = '';
+                document.getElementById('texto-depoimento').value = '';
+                mostrarToast('Depoimento adicionado com sucesso!');
+            } else {
+                mostrarModal('Atenção', 'Por favor, preencha todos os campos do depoimento.');
+            }
+        }
+
+        // Inicialização
+        window.addEventListener('load', () => {
+            carregarDepoimentos();
+            verPDFs();
+            
+            // Verificar se há link do Telegram salvo
+            const linkSalvo = localStorage.getItem('telegram_link');
+            if (linkSalvo) {
+                document.querySelector('.link-telegram').onclick = () => window.open(linkSalvo, '_blank');
+            }
+        });
+
+        // Atualizar frase automaticamente a cada 30 segundos
+        setInterval(atualizarFrase, 30000);
+    </script>
+</body>
+</html>
