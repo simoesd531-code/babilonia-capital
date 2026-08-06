@@ -1,109 +1,58 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Babilônia Capital • Riqueza Dinâmica</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-<style>
-:root{--bg:#09090A;--card:#131315;--card2:#1A1A1E;--gold:#D4AF37;--gold2:#F5D76E;--text:#EDEBE6;--muted:#9B9A97;--border:#242428}
-*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--text);font-family:Inter,sans-serif}
-h1,h2,h3{font-family:Cinzel,serif}.container{max-width:1160px;margin:0 auto;padding:0 24px}
-.hero{min-height:90vh;display:flex;align-items:center;padding:100px 0 60px;position:relative}
-.hero::before{content:'';position:absolute;top:-15%;left:50%;transform:translateX(-50%);width:1000px;height:800px;background:radial-gradient(circle, rgba(212,175,55,.16), transparent 68%)}
-.eyebrow{font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;font-weight:600}
-.hero h1{font-size:clamp(36px,6vw,66px);line-height:.92;margin-bottom:22px}.hero h1 em{color:var(--gold);font-style:italic;font-weight:400;display:block}
-.quote{border-left:2px solid var(--gold);padding-left:18px;color:var(--muted);max-width:520px;margin:24px 0}
-.btn{padding:15px 26px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14px;display:inline-flex;gap:8px;align-items:center;border:1px solid transparent;transition:.3s;cursor:pointer}
-.btn-gold{background:linear-gradient(180deg,var(--gold2),var(--gold));color:#000}.btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 28px rgba(212,175,55,.35)}
-.btn-ghost{border-color:var(--border);color:var(--text);background:transparent}.btn-ghost:hover{background:var(--card)}
-.trust{display:flex;gap:28px;flex-wrap:wrap;border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:18px 0;margin-top:40px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--muted)}
-.section{padding:100px 0}.head{text-align:center;max-width:680px;margin:0 auto 60px}.head h2{font-size:clamp(30px,4.5vw,46px);margin-bottom:14px}.head p{color:var(--muted);line-height:1.6}
-.grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}@media(max-width:900px){.grid3{grid-template-columns:1fr}}
-.pot{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px;transition:.35s}.pot:hover{transform:translateY(-4px);border-color:rgba(212,175,55,.28)}
-.pot small{font-family:Cinzel;font-size:11px;letter-spacing:.2em;color:var(--gold)}.pot h3{margin:10px 0 6px;font-size:20px}.pot .lbl{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:block}
-.pot ul{list-style:none;margin:14px 0}.pot li{font-size:13.5px;color:var(--muted);padding:5px 0;display:flex;gap:8px}.pot li::before{content:'•';color:var(--gold)}
-.badge{margin-top:14px;display:inline-block;padding:6px 12px;border-radius:999px;font-size:10px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;border:1px solid}
-.b-low{color:#34D399;background:rgba(52,211,153,.08);border-color:rgba(52,211,153,.18)}.b-mid{color:var(--gold);background:rgba(212,175,55,.08);border-color:rgba(212,175,55,.2)}.b-high{color:#F87171;background:rgba(239,68,68,.08);border-color:rgba(239,68,68,.18)}
-.free{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:center;background:var(--card2);border:1px solid var(--border);border-radius:24px;padding:36px}@media(max-width:900px){.free{grid-template-columns:1fr}}
-.free-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:12px;display:flex;justify-content:space-between;align-items:center;gap:12px}
-.testi-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}@media(max-width:900px){.testi-wrap{grid-template-columns:1fr}}
-.t-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px}.t-card p{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:10px}.t-stars{color:var(--gold);font-size:12px;margin-bottom:8px}
-.cta{text-align:center;padding:110px 0}.footer{border-top:1px solid var(--border);padding:30px 0;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;color:var(--muted);font-size:11px}
-.admin-badge{position:fixed;bottom:18px;right:18px;background:var(--card);border:1px solid var(--border);padding:10px 14px;border-radius:999px;font-size:11px;color:var(--muted);text-decoration:none;z-index:99}
-</style>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>body{font-family:'Manrope',sans-serif; background:#080808; color:#fff}</style>
 </head>
 <body>
-<a class="admin-badge" href="admin.html">⚙️ Admin</a>
-<div class="container hero"><div style="max-width:740px;z-index:2">
-<div class="eyebrow">Babilônia Capital • Research House Institucional</div>
-<h1>Riqueza Dinâmica <em>Não se busca. Se constrói.</em></h1>
-<div class="quote"><p>"O ouro flui para o homem que o poupa, e foge daquele que o desperdiça."</p><cite style="color:var(--gold);font-style:normal;font-size:11px;letter-spacing:.12em;text-transform:uppercase">— O Homem Mais Rico da Babilônia</cite></div>
-<div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:28px">
-<a href="#acesso" class="btn btn-gold">Acessar Canal Privado →</a>
-<a href="#gratis" class="btn btn-ghost">Baixar Material Gratuito</a>
+<header class="max-w-7xl mx-auto p-6 flex justify-between items-center">
+<span class="font-extrabold tracking-widest">BABILÔNIA CAPITAL</span>
+<a href="admin.html" class="bg-white text-black text-xs px-4 py-2 rounded-full font-bold">ÁREA ADMIN</a>
+</header>
+
+<section class="max-w-7xl mx-auto px-6 pt-16 pb-10 text-center">
+<h1 class="text-5xl md:text-7xl font-extrabold leading-[0.9]">Riqueza<br>Dinâmica</h1>
+<p class="mt-6 text-gray-400 italic max-w-2xl mx-auto">"O ouro flui para o homem que o poupa, e foge daquele que o desperdiça."<br>— O Homem Mais Rico da Babilônia</p>
+<a href="#aluno" class="inline-block mt-8 bg-yellow-500 text-black font-bold px-8 py-3 rounded-full">Acessar Área do Aluno</a>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 grid md:grid-cols-3 gap-4 pb-10">
+<div class="bg-[#121212] border border-white/10 rounded-[24px] p-7"><p class="text-yellow-500 font-bold text-sm">POTE I</p><h3 class="text-2xl font-bold mt-1">Conservadora</h3><p class="text-sm text-gray-400 mt-3">Ativos sólidos, lastro digital e reserva de valor. Pra quem quer dormir tranquilo.</p><p class="mt-4 text-xs bg-white/10 inline-block px-3 py-1 rounded-full">Baixíssimo Risco</p></div>
+<div class="bg-[#121212] border border-white/10 rounded-[24px] p-7"><p class="text-blue-400 font-bold text-sm">POTE II</p><h3 class="text-2xl font-bold mt-1">Assimétrica</h3><p class="text-sm text-gray-400 mt-3">Risco controlado com potencial de retorno desproporcional. O meio-termo inteligente.</p><p class="mt-4 text-xs bg-white/10 inline-block px-3 py-1 rounded-full">Risco Moderado</p></div>
+<div class="bg-[#121212] border border-white/10 rounded-[24px] p-7"><p class="text-purple-400 font-bold text-sm">POTE III</p><h3 class="text-2xl font-bold mt-1">Gemas</h3><p class="text-sm text-gray-400 mt-3">Oportunidades raras, microcaps e descobertas antes do consenso de mercado.</p><p class="mt-4 text-xs bg-white/10 inline-block px-3 py-1 rounded-full">Alto Risco • Alto Retorno</p></div>
+</section>
+
+<section id="aluno" class="max-w-7xl mx-auto px-6 py-14">
+<h2 class="text-3xl font-extrabold">ÁREA DO ALUNO • PDFs</h2>
+<p class="text-sm text-gray-400 mt-2">Todo material está na pasta assets. Clique para abrir.</p>
+<div class="grid md:grid-cols-2 gap-4 mt-6">
+
+<a href="assets/guia-blockchain-babilonia.pdf" target="_blank" class="bg-[#121212] border border-white/10 rounded-[20px] p-6 flex gap-4 hover:border-yellow-500/50 transition">
+<div class="text-4xl">📘</div>
+<div><h4 class="font-bold">Guia Blockchain Babilônia</h4><p class="text-xs text-gray-400 mt-1">Guia completo para iniciantes entenderem o lastro digital.</p><span class="text-xs mt-3 inline-block text-yellow-500 font-bold underline">ABRIR PDF →</span></div>
+</a>
+
+<a href="assets/o-que-e-mercado-cripto.pdf" target="_blank" class="bg-[#121212] border border-white/10 rounded-[20px] p-6 flex gap-4 hover:border-yellow-500/50 transition">
+<div class="text-4xl">📈</div>
+<div><h4 class="font-bold">O que é Mercado Cripto</h4><p class="text-xs text-gray-400 mt-1">Entenda o básico do mercado antes de investir qualquer real.</p><span class="text-xs mt-3 inline-block text-yellow-500 font-bold underline">ABRIR PDF →</span></div>
+</a>
+
 </div>
-<div class="trust"><span>◍ Research Independente</span><span>◍ Sem Guru • Sem Pessoa Física</span><span>◍ 3 Carteiras • Gestão de Risco</span><span>◍ Desde 2021</span></div>
-</div></div>
+</section>
 
-<section class="section" id="potes"><div class="container">
-<div class="head"><h2>Os Três Potes da Prosperidade</h2><p>Sistema de alocação inspirado na Babilônia antiga. Você não precisa viver no gráfico. Só seguir o sistema.</p></div>
-<div class="grid3">
-<div class="pot"><small>POTE I</small><h3>Carteira Conservadora</h3><span class="lbl">Reserva & Lastro Digital</span><ul><li>BTC, ETH e stable lastreada</li><li>Foco em preservação</li><li>Relatório macro semanal</li></ul><span class="badge b-low">Baixíssimo Risco</span></div>
-<div class="pot" style="border-color:rgba(212,175,55,.22)"><small>POTE II</small><h3>Carteira Assimétrica</h3><span class="lbl">Risco Controlado, Retorno Desproporcional</span><ul><li>Altcoins com tese completa em PDF</li><li>Entrada, stop e parcial</li><li>Gestão ativa</li></ul><span class="badge b-mid">Risco Moderado</span></div>
-<div class="pot"><small>POTE III</small><h3>Carteira de Gemas</h3><span class="lbl">Antes do consenso</span><ul><li>Microcaps monitorados</li><li>Baixa alocação, alto potencial</li><li>Radar interno</li></ul><span class="badge b-high">Alto Risco • Alto Retorno</span></div>
-</div></div></section>
+<section class="max-w-7xl mx-auto px-6 pb-16">
+<h2 class="text-2xl font-bold">O que dizem os iniciados</h2>
+<div class="bg-[#121212] border border-white/5 rounded-[20px] p-6 mt-4 max-w-2xl"><p class="text-sm">"O conteúdo da Babilônia Capital mudou minha forma de ver riqueza. Direto ao ponto."</p><p class="text-xs mt-3 font-bold text-gray-400">— Iniciado Babilônia • 5 estrelas</p></div>
+</section>
 
-<section class="section" id="gratis"><div class="container">
-<div class="free">
-<div><h2 style="font-size:36px;margin-bottom:12px">Comece de graça. Entenda o jogo.</h2><p style="color:var(--muted);line-height:1.7;margin-bottom:24px">Antes de investir, entenda o que é Blockchain e o que o mercado cripto realmente representa. Material institucional da Babilônia, sem venda.</p>
-<div id="free-list"></div>
-</div>
-<div style="background:var(--card);border:1px solid var(--border);border-radius:20px;padding:28px">
-<h3 style="margin-bottom:12px">Por que é gratuito?</h3><p style="color:var(--muted);font-size:14px;line-height:1.7">Babilônia não quer seu dinheiro se você não entende o que está comprando. Baixe, leia, valide. Se fizer sentido, o canal privado está aberto. Se não, você sai mais inteligente.</p>
-<p style="margin-top:18px;font-size:12px;color:var(--gold);letter-spacing:.1em;text-transform:uppercase">+1.200 downloads • Atualizado Jun/2026</p>
-</div>
-</div></div></section>
-
-<section class="section" id="depoimentos"><div class="container">
-<div class="head"><h2>O que dizem os iniciados</h2><p>Depoimentos reais de membros. Adicionados e validados via painel admin. Sem edição.</p></div>
-<div id="testi-grid" class="testi-wrap"></div>
-<div style="text-align:center;margin-top:32px"><a href="admin.html" class="btn btn-ghost" style="font-size:12px">+ Adicionar novo depoimento (Admin)</a></div>
-</div></section>
-
-<section class="cta container" id="acesso"><h2>Entre para a Babilônia.</h2><p style="color:var(--muted);max-width:520px;margin:0 auto 28px">Riqueza não é sorte. É sistema. Os 3 potes estão abertos.</p><a href="https://t.me/babiloniacapital" target="_blank" class="btn btn-gold" style="font-size:16px;padding:18px 40px">Acessar Babilônia Capital</a><p style="margin-top:12px;font-size:11px;color:var(--muted);letter-spacing:.08em">VAGAS LIMITADAS • ACESSO IMEDIATO • SEM EXPOSIÇÃO PESSOAL</p></section>
-
-<footer class="container footer"><span>© 2026 Babilônia Capital • Research House Independente • Não é recomendação de investimento</span><span>admin • research • fundamentos</span></footer>
-
-<script>
-// Carrega depoimentos do JSON - dinâmico via GitHub
-async function loadTesti(){
- try{
-  const r = await fetch('data/testimonials.json?v='+Date.now());
-  const data = await r.json();
-  const grid = document.getElementById('testi-grid');
-  grid.innerHTML = data.map(t=>`
-   <div class="t-card">
-    <div class="t-stars">${'★'.repeat(t.nota)}${'☆'.repeat(5-t.nota)}</div>
-    <p>"${t.texto}"</p>
-    <b style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${t.nome} • ${t.pote}</b><br>
-    <span style="font-size:10px;color:var(--muted)">${t.tempo}</span>
-   </div>
-  `).join('');
- }catch(e){document.getElementById('testi-grid').innerHTML='<p style="color:var(--muted)">Erro ao carregar depoimentos. Verifique data/testimonials.json</p>'}
-}
-async function loadFree(){
- try{
-  const r = await fetch('data/free-content.json?v='+Date.now());
-  const data = await r.json();
-  document.getElementById('free-list').innerHTML = data.map(f=>`
-   <div class="free-card">
-    <div><b style="font-size:14px;display:block">${f.titulo}</b><span style="font-size:12px;color:var(--muted)">${f.desc}</span><br><span style="font-size:10px;color:var(--gold);letter-spacing:.12em;text-transform:uppercase">${f.tipo}</span></div>
-    <a href="${f.arquivo}" download class="btn btn-ghost" style="padding:10px 16px;font-size:12px">Baixar</a>
-   </div>
-  `).join('');
- }catch(e){}
-}
-loadTesti(); loadFree();
-</script>
+<footer class="border-t border-white/10 py-10 text-center">
+<p class="text-xs text-gray-500">Babilônia Capital © 2026</p>
+<a href="https://t.me/" class="inline-block mt-3 bg-white text-black text-xs font-bold px-5 py-2 rounded-full">Acessar Canal no Telegram • sinais & discussões</a>
+<p class="text-[10px] text-gray-600 mt-4">Se os PDFs derem 404, crie o arquivo.nojekyll vazio na raiz do repositório.</p>
+</footer>
 </body>
 </html>
