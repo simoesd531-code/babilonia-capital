@@ -1,0 +1,16 @@
+[
+  {
+    "id": "blockchain",
+    "titulo": "O que é Blockchain, na prática",
+    "desc": "Guia de 12 páginas sem tecnicês. O que é, por que importa e por que não vai embora.",
+    "arquivo": "assets/guia-blockchain-babilonia.pdf",
+    "tipo": "PDF Gratuito"
+  },
+  {
+    "id": "cripto",
+    "titulo": "O que realmente é o Mercado Cripto",
+    "desc": "Por que cripto não é só moeda. É lastro, é tecnologia, é transferência de poder. Explicado para leigos.",
+    "arquivo": "assets/o-que-e-mercado-cripto.pdf",
+    "tipo": "PDF Gratuito"
+  }
+]

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin - Babilônia Capital</title>
+<style>
+body{background:#0A0A0B;color:#EDEBE6;font-family:Inter,sans-serif;padding:24px}*{box-sizing:border-box}
+.card{max-width:760px;margin:0 auto;background:#131315;border:1px solid #242428;border-radius:16px;padding:24px;margin-bottom:18px}
+input,textarea,select{width:100%;background:#1A1A1E;border:1px solid #2A2A2E;border-radius:10px;padding:12px;color:#EDEBE6;margin:6px 0 12px;font-family:Inter}
+label{font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:#9B9A97}
+.btn{padding:12px 18px;border-radius:999px;border:none;font-weight:600;cursor:pointer}.btn-gold{background:#D4AF37;color:#000}.btn-ghost{background:transparent;border:1px solid #2A2A2E;color:#EDEBE6}
+pre{background:#0A0A0B;border:1px solid #242428;border-radius:12px;padding:16px;overflow:auto;font-size:12px;white-space:pre-wrap}
+</style></head><body>
+<div class="card"><h2 style="font-family:Cinzel">Admin Babilônia Capital</h2><p style="color:#9B9A97;font-size:13px">Painel simples. Senha padrão: <b>babilonia2026</b> (troque no código). Aqui você adiciona depoimentos e gera o JSON pra colar no GitHub.</p>
+<div id="gate"><label>Senha</label><input id="pass" type="password" placeholder="Digite a senha"><button class="btn btn-gold" onclick="login()">Entrar</button></div>
+<div id="panel" style="display:none">
+<h3>1. Adicionar Novo Depoimento</h3>
+<label>Nome</label><input id="nome" placeholder="Ex: Rafael M.">
+<label>Tempo de membro</label><input id="tempo" placeholder="Ex: Membro há 8 meses">
+<label>Pote</label><select id="pote"><option>Pote I</option><option>Pote II</option><option>Pote III</option><option>Pote I e II</option><option>Pote I, II e III</option></select>
+<label>Texto do depoimento</label><textarea id="texto" rows="4" placeholder="Escreva o depoimento..."></textarea>
+<label>Nota (1-5)</label><select id="nota"><option>5</option><option>4</option><option>3</option></select>
+<button class="btn btn-gold" onclick="add()">Adicionar na lista abaixo</button>
+<h3 style="margin-top:28px">2. Lista Atual (editável)</h3>
+<pre id="out"></pre>
+<button class="btn btn-ghost" onclick="copy()">Copiar JSON</button> <a class="btn btn-ghost" href="data/testimonials.json" target="_blank" style="text-decoration:none;display:inline-block">Ver JSON atual</a>
+<p style="color:#9B9A97;font-size:12px;margin-top:12px">COMO USAR: Copie tudo do quadro, vá no GitHub > data/testimonials.json > lápis > cole por cima > Commit. O site atualiza em 1-2min.</p>
+<h3 style="margin-top:28px">3. Como adicionar novo PDF gratuito</h3>
+<p style="color:#9B9A97;font-size:13px;line-height:1.6">1. Envie o PDF para a pasta assets no GitHub (Add file > Upload files)<br>2. Edite data/free-content.json e adicione uma linha igual as outras com titulo, desc e arquivo: assets/seu-arquivo.pdf<br>3. Commit. Pronto, aparece no site.</p>
+</div></div>
+<script>
+const SENHA="babilonia2026";
+let lista=[];
+async function load(){try{const r=await fetch('data/testimonials.json?v='+Date.now());lista=await r.json();render()}catch(e){lista=[];render()}}
+function login(){if(document.getElementById('pass').value===SENHA){document.getElementById('gate').style.display='none';document.getElementById('panel').style.display='block';load()}else{alert('Senha incorreta')}}
+function render(){document.getElementById('out').textContent=JSON.stringify(lista,null,2)}
+function add(){
+ const item={nome:document.getElementById('nome').value||'Anônimo', tempo:document.getElementById('tempo').value||'Membro', pote:document.getElementById('pote').value, texto:document.getElementById('texto').value||'Depoimento...', nota:parseInt(document.getElementById('nota').value)};
+ if(!item.texto){alert('Escreva o texto');return}
+ lista.unshift(item); render();
+ document.getElementById('nome').value='';document.getElementById('texto').value='';
+}
+function copy(){navigator.clipboard.writeText(document.getElementById('out').textContent);alert('JSON copiado! Agora cole no GitHub em data/testimonials.json')}
+</script>
+</body></html>
